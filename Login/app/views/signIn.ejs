@@ -1,0 +1,21 @@
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+
+    <body>
+        <%- include('./partials/navLogin.ejs') %>
+            <form action="/login/sign-in" method="post">
+                <br>
+                <label for="username">Username: </label>
+                <input type="text" id="username" name="username" value="<%=username %>" required><br><br>
+
+                <label for="password">Password: </label>
+                <input type="password" id="password" name="password" value="<%=password %>" required>
+                <p style="color:red">
+                    <%= message %>
+                </p>
+                <input type="submit" value="Submit">
+            </form>
+            <%- include('./partials/footer.ejs') %>
+    </body>
+
+</html>

@@ -1,0 +1,40 @@
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+
+    <body>
+        <%- include('./partials/navUser.ejs') %>
+            <div style="display: flex;flex-direction: row;">
+                <% for (let i=0; i < products.length; i++) { %>
+                    <div class="clickable-div"
+                        style="display: flex; flex-direction: column; padding: 30px 100px;box-sizing: border-box;outline: solid 1px;"
+                        data-product-id="<%= products[i].ProductID %>">
+                        <p>
+                            <%=products[i].ProductName %>
+                        </p>
+                        <p>
+                            <%=products[i].Unit %>
+                        </p>
+                        <p>
+                            <%=products[i].Price %>
+                        </p>
+                    </div>
+                    <% } %>
+            </div>
+            <%- include('./partials/footer.ejs') %>
+
+                <script>
+                    const clickableDivs = document.querySelectorAll('.clickable-div');
+                    clickableDivs.forEach(clickableDiv => {
+                        clickableDiv.addEventListener('click', function () {
+                            const productId = clickableDiv.getAttribute('data-product-id');
+                            redirectToURL(`users/products/${productId}`);
+                        });
+                    });
+
+                    function redirectToURL(url) {
+                        window.location.href = url;
+                    }
+                </script>
+    </body>
+
+</html>

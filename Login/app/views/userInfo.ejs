@@ -1,0 +1,22 @@
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+
+    <body>
+        <%- include('./partials/navUser.ejs') %>
+            <div>
+                <ul>
+                    <li>
+                        <button onclick="location.href='/users/customer'">Customer Info</button>
+                    </li>
+                    <li>
+                        <button onclick="location.href='/users/shipper'">Shipper Register</button>
+                    </li>
+                    <li>
+                        <button onclick="location.href='/users/orders'">Orders List</button>
+                    </li>
+                </ul>
+            </div>
+            <%- include('./partials/footer.ejs') %>
+    </body>
+
+</html>

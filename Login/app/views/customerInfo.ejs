@@ -1,0 +1,48 @@
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+
+    <body>
+        <%- include('./partials/navUser.ejs') %>
+            <div class="customer-info">
+                <div class="field">
+                    <span class="label">Customer Name:</span>
+                    <span class="value">
+                        <%= customer.CustomerName %>
+                    </span>
+                </div>
+                <div class="field">
+                    <span class="label">Contact Name:</span>
+                    <span class="value">
+                        <%= customer.ContactName %>
+                    </span>
+                </div>
+                <div class="field">
+                    <span class="label">Address:</span>
+                    <span class="value">
+                        <%= customer.Address %>
+                    </span>
+                </div>
+                <div class="field">
+                    <span class="label">City:</span>
+                    <span class="value">
+                        <%= customer.City %>
+                    </span>
+                </div>
+                <div class="field">
+                    <span class="label">Postal Code:</span>
+                    <span class="value">
+                        <%= customer.PostalCode %>
+                    </span>
+                </div>
+                <div class="field">
+                    <span class="label">Country:</span>
+                    <span class="value">
+                        <%= customer.Country %>
+                    </span>
+                </div>
+            </div>
+            <button onclick="location.href='/users/customerChangeInfo'">Change Info</button>
+            <%- include('./partials/footer') %>
+    </body>
+
+</html>

@@ -1,0 +1,41 @@
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+
+    <body>
+        <%- include('./partials/navUser.ejs') %>
+            <div class="customer-info">
+                <form action="/users/customerRegister" method="POST"> <!-- Đặt action và method tương ứng -->
+                    <div class="field">
+                        <label for="customerName">Customer Name:</label>
+                        <input type="text" id="customerName" name="CustomerName" value="<%= customer.CustomerName %>"
+                            required>
+                    </div>
+                    <div class="field">
+                        <label for="contactName">Contact Name:</label>
+                        <input type="text" id="contactName" name="ContactName" value="<%= customer.ContactName %>"
+                            required>
+                    </div>
+                    <div class="field">
+                        <label for="address">Address:</label>
+                        <input type="text" id="address" name="Address" value="<%= customer.Address %>" required>
+                    </div>
+                    <div class="field">
+                        <label for="city">City:</label>
+                        <input type="text" id="city" name="City" value="<%= customer.City %>" required>
+                    </div>
+                    <div class="field">
+                        <label for="postalCode">Postal Code:</label>
+                        <input type="text" id="postalCode" name="PostalCode" value="<%= customer.PostalCode %>"
+                            required>
+                    </div>
+                    <div class="field">
+                        <label for="country">Country:</label>
+                        <input type="text" id="country" name="Country" value="<%= customer.Country %>" required>
+                    </div>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+            <%- include('./partials/footer') %>
+    </body>
+
+</html>

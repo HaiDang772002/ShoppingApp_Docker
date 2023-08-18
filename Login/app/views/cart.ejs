@@ -1,0 +1,113 @@
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+
+    <body>
+        <%- include('./partials/navUser.ejs') %>
+            <div style="display: flex;width: 100%;">
+                <form id="order-form" action="/users/submit-order" method="POST">
+                    <% for (let i=0; i < products.length; i++) { %>
+                        <div class="clickable-div"
+                            style="display: flex; flex-direction: column; padding: 30px 100px;box-sizing: border-box;outline: solid 1px;"
+                            data-product-id="<%= products[i].ProductID %>">
+                            <p>
+                                <%=products[i].ProductName %>
+                            </p>
+                            <p>
+                                <%=products[i].Price %>
+                            </p>
+                            <div style="display: flex; flex-direction: row;">
+                                <input style="width: 60px;" type="number" name="quantityList[]" class="input-quantity"
+                                    value=<%=products[i].quantity%>
+                                min="1">
+                                <span class="total-price" data-price="<%=products[i].Price%>">
+                                    <%=products[i].quantity * products[i].Price%>
+                                </span>
+                                <input type="hidden" name="productIdList[]" value="<%= products[i].ProductID %>">
+                                <button type="button" class="btn-delete"
+                                    data-product-id="<%= products[i].ProductID %>">Delete</button>
+                            </div>
+                        </div>
+                        <% } %>
+                            <button class="submit-button" type="submit">Submit Order</button>
+                </form>
+            </div>
+            <div class="total-all">
+                Total: <span class="total-all-price">
+                    0
+                </span>
+            </div>
+
+            <script>
+                const inputQuantities = document.querySelectorAll('.input-quantity');
+                const totalAllPrice = document.querySelector('.total-all-price');
+                let totalPriceSpans = document.querySelectorAll('.total-price');
+                function reRender() {
+                    totalPriceSpans = document.querySelectorAll('.total-price');
+                    if (totalPriceSpans.length === 0) {
+                        document.querySelector('.total-all').remove()
+                        document.querySelector('.submit-button').remove()
+                    } else {
+                        calculateSum()
+                    }
+                }
+                reRender()
+                inputQuantities.forEach((input, index) => {
+                    input.addEventListener('change', () => {
+                        const quantity = parseInt(input.value);
+                        const price = parseInt(totalPriceSpans[index].getAttribute('data-price'));
+
+                        if (!isNaN(price)) {
+                            const total = price * quantity;
+                            totalPriceSpans[index].textContent = total;
+                            calculateSum()
+                        }
+                    });
+                });
+
+                const deleteButtons = document.querySelectorAll('.btn-delete');
+                deleteButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const productId = btn.getAttribute('data-product-id');
+                        deleteProduct(productId);
+                    });
+                });
+                function calculateSum() {
+                    let initialTotal = 0;
+                    totalPriceSpans.forEach(span => {
+                        initialTotal += parseInt(span.textContent);
+                    });
+                    totalAllPrice.textContent = initialTotal.toFixed(2);
+                }
+
+                function deleteProduct(productId) {
+                    fetch(`/users/cart/${productId}`, {
+                        method: 'DELETE'
+                    })
+                        .then(response => {
+                            if (response.status === 204) {
+                                removeProductFromUI(productId);
+                                reRender()
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error deleting product:', error);
+                        });
+                }
+
+                function removeProductFromUI(productId) {
+                    const productDiv = document.querySelector(`[data-product-id="${productId}"]`);
+                    if (productDiv) {
+                        productDiv.remove();
+                    }
+                }
+                function submitData() {
+                    const productList = []
+
+                }
+            </script>
+
+
+            <%- include('./partials/footer.ejs') %>
+    </body>
+
+</html>

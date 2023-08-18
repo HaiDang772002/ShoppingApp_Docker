@@ -1,0 +1,21 @@
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+
+    <body>
+        <%- include('./partials/navUser.ejs') %>
+            <div style="display: flex;flex-direction: row;">
+                <% for (let i=0; i < orders.length; i++) { %>
+                    <div class="clickable-div"
+                        style="display: flex; flex-direction: column; padding: 30px 100px;box-sizing: border-box;outline: solid 1px;"
+                        data-product-id="<%= orders[i].OrderID %>">
+                        <span> OrderID:
+                            <%=orders[i].OrderID %>
+                        </span>
+                        <span>OrderDate:
+                            <%=orders[i].OrderDate %>
+                        </span>
+                        <button type="button"> Hủy</button>
+                    </div>
+                    <% } %>
+            </div>
+            <%- include('./partials/footer.ejs') %>

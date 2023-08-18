@@ -1,0 +1,140 @@
+a:link {
+    color: blue;
+}
+
+a:hover {
+    color: red;
+}
+
+a:visited {
+    color: blue;
+}
+
+a:visited:hover {
+    color: red;
+}
+
+form input[type='text'][name='address'] {
+    display: inline-block;
+    width: 500px;
+}
+
+form input[type='number'] {
+    display: inline-block;
+    width: 40px;
+}
+
+form input[type='text'][name='username'] {
+    display: inline-block;
+    width: 160px;
+}
+
+form input[type='password'][name='password'] {
+    display: inline-block;
+    width: 160px;
+}
+
+form label {
+    display: inline-block;
+    width: 70px;
+}
+
+.delete_btn {
+    color: red;
+    padding-left: 20px;
+    cursor: default;
+}
+
+.detail_btn {
+    color: greenyellow;
+    cursor: default;
+}
+
+
+
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 2px 0;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo img {
+    width: 100px;
+    height: auto;
+    border-radius: 25px;
+}
+
+.search-form {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 20px;
+}
+
+.search-form input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    flex: 1;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-form button {
+    background-color: #f39c12;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-form button:hover {
+    background-color: #e67e22;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logout_btn {
+    text-decoration: none;
+    color: white;
+    margin-left: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.cart-logo img,
+.customer-logo img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.cart-logo,
+.customer-logo {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}

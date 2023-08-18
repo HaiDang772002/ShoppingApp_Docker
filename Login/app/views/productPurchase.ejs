@@ -1,0 +1,32 @@
+<%- include('./partials/head.ejs') %>
+
+    <body>
+        <%- include('./partials/navUser.ejs') %>
+            <div class="product-container">
+                <div class="product-details"
+                    style="display: flex; flex-direction: column; padding: 30px 100px;box-sizing: border-box;outline: solid 1px;width: fit-content;">
+                    <p>
+                        <%=product.ProductName %>
+                    </p>
+                    <p>
+                        <%=product.Unit %>
+                    </p>
+                    <p>
+                        <%=product.Price %>
+                    </p>
+                </div>
+                <div class="quantity-container">
+                    <form action="/users/cart" method="post">
+                        <input type="hidden" name="ProductID" value="<%= product.ProductID %>">
+                        <input type="hidden" name="ProductName" value="<%= product.ProductName %>">
+                        <input type="hidden" name="Price" value="<%= product.Price %>">
+                        <span class="quantity-label">Number of purchase:</span>
+                        <input type="number" name="quantity" class="input-quantity" value="1" min="1">
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+            <%- include('./partials/footer.ejs') %>
+    </body>
+
+    </html>

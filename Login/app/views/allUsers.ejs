@@ -1,0 +1,35 @@
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+
+    <body>
+        <%- include('./partials/navUser.ejs') %>
+            <div>
+                <% users.forEach(user=> {%>
+                    <p>
+                        <%=user.name %>- <%=user.age %>- <%=user.address %>
+                    </p>
+                    <span class="detail_btn" data-href='/users/detail'>Detail</span>
+                    <span class="delete_btn" data-href='/users/delete/<%=user._id %>'>Delete</span>
+                    <%}); %>
+            </div>
+            <%- include('./partials/footer.ejs') %>
+                <script>
+                    const detailBtns = document.querySelectorAll('span.detail_btn');
+                    detailBtns.forEach(detailBtn => {
+                        detailBtn.addEventListener('click', () => {
+                            const href = detailBtn.getAttribute('data-href');
+                            window.location.href = href;
+                        });
+                    });
+
+                    const deleteBtns = document.querySelectorAll('span.delete_btn');
+                    deleteBtns.forEach(deleteBtn => {
+                        deleteBtn.addEventListener('click', () => {
+                            const href = deleteBtn.getAttribute('data-href')
+                            fetch(href, { method: 'DELETE' }).then(res => res.json()).then((data) => { window.location.href = data })
+                        });
+                    });
+                </script>
+    </body>
+
+</html>
