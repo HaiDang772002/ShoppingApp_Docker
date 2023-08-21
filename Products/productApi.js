@@ -9,6 +9,21 @@ app.get('/products', async (req, res) => {
     res.json(products)
 })
 
+app.get('/products/Price/:id', async (req, res) => {
+    const data = await productModel.findOne({
+        where: {
+            ProductID: req.params.id
+        },
+        attributes: ['Price']
+    });
+    if (data) {
+        // Set data to Redis
+        res.json(data);
+    } else {
+        res.json({ empty: 'Không tìm thấy dữ liệu' });
+    }
+})
+
 app.get('/products/:id', async (req, res) => {
     const data = await productModel.findOne({
         where: {

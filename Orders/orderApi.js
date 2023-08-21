@@ -19,11 +19,24 @@ app.post('/createOrder', async (req, res) => {
         res.json(error)
     }
 })
+app.delete('/order/:id', (req, res) => {
+    orderModel.destroy({
+        where: {
+            OrderID: req.params.id
+        }
+    }).then(() => {
+        res.json('Delete Order Successfully')
+    })
+        .catch(error => {
+            res.json({ empty: 'Không xóa được đơn hàng' })
+        });
+})
 app.get('/orders/:customerID', async (req, res) => {
     const orders = await orderModel.findAll({
         where: {
             Customers_CustomerID: req.params.customerID
-        }
+        },
+        order: [['OrderDate', 'DESC']]
     })
     if (orders) {
         res.json(orders)

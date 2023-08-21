@@ -14,8 +14,41 @@
                         <span>OrderDate:
                             <%=orders[i].OrderDate %>
                         </span>
-                        <button type="button"> Hủy</button>
+                        <% for (let j=0; j < orderDetails[i].length; j++) { %>
+                            <span> Product:<%=orderDetails[i][j].Products_ProductID %>,Quantity:
+                                    <%=orderDetails[i][j].Quantity %>,Price:<%=orderDetails[i][j].Price %>
+                            </span>
+                            <% } %>
+                                <span>Total:<%=orderPrice[i] %> </span>
+                                <button type="button" onclick="cancelOrder('<%= orders[i].OrderID %>')"> Hủy</button>
                     </div>
                     <% } %>
             </div>
+            <script>
+                function cancelOrder(orderID) {
+                    fetch(`/users/order/${orderID}`, {
+                        method: 'DELETE'
+                    })
+                        .then(response => {
+                            if (response.status === 204) {
+                                removeOrder(orderID)
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error deleting product:', error);
+                        });
+                }
+
+                function removeOrder(orderID) {
+                    // Gọi hàm xử lý xóa đơn hàng qua API hoặc xử lý trực tiếp dữ liệu
+                    // Ví dụ: removeOrderAPI(orderID);
+
+                    // Xóa khối HTML tương ứng với orderID
+                    let divToRemove = document.querySelector(`[data-product-id="${orderID}"]`);
+                    if (divToRemove) {
+                        divToRemove.remove();
+                    }
+                }
+            </script>
+
             <%- include('./partials/footer.ejs') %>

@@ -2,7 +2,6 @@ const express = require('express')
 const axios = require('axios')
 const myLoginModel = require('../models/loginModel')
 const { customerData } = require('./dataJsToEJS')
-const OrderDetails = require('../../../OrderDetails/orderDetailModel')
 let CustomerInfoState //Biến lưu giữ trạng thái thông tin người dùng, có thể thay đổi theo thời gian
 let ProductInfoState // Biến lưu giữ trạng thái mảng sản phẩm
 
@@ -173,7 +172,7 @@ router.post('/submit-order', async (req, res, next) => {
         else {
             // Xóa hết dữ liệu trong mảng req.session.cart bằng cách sử dụng splice
             req.session.cart.splice(0, req.session.cart.length);
-            res.json(responseOrderDetails.data)
+            res.redirect('/users/orders')
         }
     }
 })
@@ -186,7 +185,36 @@ router.get('/orders', async (req, res) => {
     }
     else {
         const allOrdersArray = allOrders.data
-        res.render('allOrders', { title: 'allOrders', orders: allOrdersArray })
+        const allOrderDetailsArray = []
+        const priceForEach = []
+        const orderPrice = []
+        for (let i = 0; i < allOrdersArray.length; i++) {
+            let totalOrderPrice = 0;
+            const orderDetailsForEachOrderResult = await axios.get(`${process.env.ORDERDETAIL_HOST}/allOrderDetails/ProductID_and_Quantity/${allOrdersArray[i].OrderID}`)
+            const orderDetailsForEachOrder = orderDetailsForEachOrderResult.data;
+            for (let j = 0; j < orderDetailsForEachOrder.length; j++) {
+                const priceforEachProduct = await axios.get(`${process.env.PRODUCT_HOST}/products/Price/${orderDetailsForEachOrder[j].Products_ProductID}`)
+                orderDetailsForEachOrder[j].Price = priceforEachProduct.data.Price * orderDetailsForEachOrder[j].Quantity
+                totalOrderPrice += orderDetailsForEachOrder[j].Price
+            }
+            orderPrice[i] = totalOrderPrice
+            console.log(orderPrice)
+            allOrderDetailsArray.push(orderDetailsForEachOrder)
+        }
+        console.log(allOrderDetailsArray)
+        res.render('allOrders', { title: 'allOrders', orders: allOrdersArray, orderDetails: allOrderDetailsArray, orderPrice: orderPrice })
     }
 })
+router.delete('/order/:orderID', async (req, res) => {
+    axios.delete(`${process.env.ORDER_HOST}/order/${req.params.orderID}`)
+        .then(response => {
+            console.log('Đã xóa đơn hàng thành công:', response.data);
+            // Xử lý phản hồi khi yêu cầu DELETE thành công
+        })
+        .catch(error => {
+            console.error('Lỗi xóa đơn hàng:', error);
+            // Xử lý lỗi nếu có lỗi
+        });
+    res.sendStatus(204); // Gửi trạng thái 204 No Content
+});
 module.exports = router;
