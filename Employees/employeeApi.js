@@ -1,7 +1,6 @@
 const express = require('express');
 const employeeModel = require('./employeeModel');
 const Employee = require('./employeeModel');
-const Shipper = require('../Shippers/shipperModel');
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
