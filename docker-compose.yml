@@ -1,0 +1,92 @@
+version: '3'
+services:
+  mysql-container:
+    container_name: mysql-container
+    build:
+      context: ./dumps
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+    ports:
+      - "3306:3306"
+    networks:
+      - mynetwork
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  login-container:
+    container_name: login-container
+    build:
+      context: ./Login
+    ports:
+      - "3000:3000"
+    networks:
+      - mynetwork
+    depends_on:
+      - mysql-container
+  customer-container:
+    container_name: customer-container
+    build:
+      context: ./Customer
+    ports:
+      - "3001:3001"
+    networks:
+      - mynetwork
+    depends_on:
+      - mysql-container
+  product-container:
+    container_name: product-container
+    build:
+      context: ./Products
+    ports:
+      - "3002:3002"
+    networks:
+      - mynetwork
+    depends_on:
+      - mysql-container
+  order-container:
+    container_name: order-container
+    build:
+      context: ./Orders
+    ports:
+      - "3003:3003"
+    networks:
+      - mynetwork
+    depends_on:
+      - mysql-container
+  orderdetail-container:
+    container_name: orderdetail-container
+    build:
+      context: ./OrderDetails
+    ports:
+      - "3006:3006"
+    networks:
+      - mynetwork
+    depends_on:
+      - mysql-container
+  employee-container:
+    container_name: employee-container
+    build:
+      context: ./Employees
+    ports:
+      - "3004:3004"
+    networks:
+      - mynetwork
+    depends_on:
+      - mysql-container
+  shipper-container:
+    container_name: shipper-container
+    build:
+      context: ./Shippers
+    ports:
+      - "3005:3005"
+    networks:
+      - mynetwork
+    depends_on:
+      - mysql-container
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  mysql-data:
+
