@@ -6,14 +6,6 @@ OrderDetails/node_modules/
 Products/node_modules/
 Shippers/node_modules/
 
-Customer/.env/
-Employees/.env/
-Login/.env/
-Orders/.env/
-OrderDetails/.env/
-Products/.env/
-Shippers/.env/
-
 Customer/.package-lock.json/
 Employees/.package-lock.json/
 Login/.package-lock.json/
